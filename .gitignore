@@ -1,0 +1,16 @@
+.venv/
+vendor/
+.cache/
+dist/
+build/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.hypothesis/
+.DS_Store
+test-runs/
+*.FCStd1
+
+artifacts/
+evidence/
+WORK_LOG.md

@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "units": "mm",
+  "purpose": "Generated concept examples and independent expected topology; feed/fit recipes are not prescribed.",
+  "fixtures": [
+    {
+      "filename": "asymmetric_leaf.svg",
+      "components": 2,
+      "holes": 1,
+      "canvas_mm": [
+        100,
+        80
+      ],
+      "purpose": "Asymmetric flip and curved compound-hole input",
+      "expected_bounds_svg_mm": null,
+      "expected_bounds_canonical_mm": null,
+      "area_abs_tolerance": 1e-05
+    },
+    {
+      "filename": "outlined_letterform.svg",
+      "components": 1,
+      "holes": 2,
+      "canvas_mm": [
+        90,
+        85
+      ],
+      "area_mm2": 2400,
+      "purpose": "Already outlined letter with two counters; no font required",
+      "expected_bounds_svg_mm": [
+        20,
+        10,
+        70,
+        75
+      ],
+      "expected_bounds_canonical_mm": [
+        20,
+        10,
+        70,
+        75
+      ],
+      "area_abs_tolerance": 1e-05
+    },
+    {
+      "filename": "scattered_motif.svg",
+      "components": 4,
+      "holes": 0,
+      "canvas_mm": [
+        100,
+        80
+      ],
+      "area_mm2": 573.0973355292325,
+      "purpose": "Disconnected registered insert details",
+      "expected_bounds_svg_mm": [
+        8,
+        8,
+        80,
+        63
+      ],
+      "expected_bounds_canonical_mm": [
+        8,
+        17,
+        80,
+        72
+      ],
+      "area_abs_tolerance": 0.03
+    },
+    {
+      "filename": "fine_detail_ladder.svg",
+      "components": 9,
+      "holes": 0,
+      "canvas_mm": [
+        100,
+        60
+      ],
+      "area_mm2": 1020,
+      "widths_mm": [
+        0.125,
+        0.25,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "gaps_mm": [
+        0.125,
+        0.25
+      ],
+      "purpose": "Tool- and resolution-dependent small features",
+      "expected_bounds_svg_mm": [
+        10,
+        15,
+        84.375,
+        47
+      ],
+      "expected_bounds_canonical_mm": [
+        10,
+        13,
+        84.375,
+        45
+      ],
+      "area_abs_tolerance": 1e-05
+    },
+    {
+      "filename": "boundary_crossing_ornament.svg",
+      "components": 1,
+      "holes": 1,
+      "canvas_mm": [
+        100,
+        100
+      ],
+      "area_mm2": 6156,
+      "suggested_bounds_mm": [
+        0,
+        0,
+        100,
+        100
+      ],
+      "purpose": "All four bounds crossings with retained counter",
+      "expected_bounds_svg_mm": [
+        -10,
+        -10,
+        110,
+        110
+      ],
+      "expected_bounds_canonical_mm": [
+        -10,
+        -10,
+        110,
+        110
+      ],
+      "area_abs_tolerance": 1e-05
+    },
+    {
+      "filename": "dense_decorative_field.svg",
+      "components": 500,
+      "holes": 0,
+      "canvas_mm": [
+        200,
+        160
+      ],
+      "area_mm2": 9656.781074217106,
+      "boundary_vertices": 10000,
+      "purpose": "Finite memory/response corpus; regular twenty-sided polygons",
+      "expected_bounds_svg_mm": [
+        1.5,
+        1.5,
+        198.5,
+        158.5
+      ],
+      "expected_bounds_canonical_mm": [
+        1.5,
+        1.5,
+        198.5,
+        158.5
+      ],
+      "area_abs_tolerance": 1e-05
+    }
+  ],
+  "coordinate_convention": "Source bounds are physical SVG coordinates with Y down. Canonical bounds are X right, Y up within the physical canvas."
+}

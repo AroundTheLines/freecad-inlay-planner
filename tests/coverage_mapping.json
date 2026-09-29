@@ -1,0 +1,175 @@
+{
+  "artifact_prefix": "artifacts/final-mac-82c512f1",
+  "rows": {
+    "E00": [
+      "smoke",
+      "document_lifetime",
+      "review_layout"
+    ],
+    "E01": [
+      "positive_flat",
+      "positive_v",
+      "positive_bull",
+      "positive_flat_v",
+      "positive_multi_flat",
+      "portable",
+      "portable_flat",
+      "portable_v",
+      "portable_bull",
+      "portable_flat_v"
+    ],
+    "E02": [
+      "review_svg",
+      "edge_inputs_depth"
+    ],
+    "E03": [
+      "review_svg",
+      "edge_inputs_depth"
+    ],
+    "E04": [
+      "stock_faces",
+      "source_recovery",
+      "resource_guard"
+    ],
+    "E05": [
+      "edge_tools",
+      "edge_fit",
+      "review_placement",
+      "portable_units"
+    ],
+    "E06": [
+      "review_placement",
+      "edge_fit"
+    ],
+    "E07": [
+      "review_svg",
+      "review_placement",
+      "transaction_recovery",
+      "document_lifetime"
+    ],
+    "E08": [
+      "edge_bounds"
+    ],
+    "E09": [
+      "review_placement",
+      "edge_inputs_depth",
+      "edge_bounds"
+    ],
+    "E10": [
+      "edge_tools",
+      "positive_flat",
+      "positive_v",
+      "positive_bull"
+    ],
+    "E11": [
+      "positive_flat",
+      "positive_v",
+      "positive_bull",
+      "edge_tools",
+      "edge_fit"
+    ],
+    "E12": [
+      "edge_fit",
+      "review_lifecycle"
+    ],
+    "E13": [
+      "edge_fit",
+      "count_boundaries"
+    ],
+    "E14": [
+      "edge_inputs_depth",
+      "edge_fit",
+      "positive_v",
+      "positive_bull"
+    ],
+    "E15": [
+      "edge_fit",
+      "portable_units"
+    ],
+    "E16": [
+      "review_lifecycle",
+      "edge_fit",
+      "positive_flat"
+    ],
+    "E17": [
+      "preview_pick",
+      "review_lifecycle",
+      "positive_flat_v",
+      "edge_bounds"
+    ],
+    "E18": [
+      "count_boundaries",
+      "edge_tools"
+    ],
+    "E19": [
+      "edge_fit",
+      "positive_multi_flat",
+      "count_boundaries"
+    ],
+    "E20": [
+      "review_lifecycle",
+      "review_failures",
+      "document_lifetime"
+    ],
+    "E21": [
+      "positive_flat",
+      "count_boundaries",
+      "source_recovery",
+      "review_lifecycle"
+    ],
+    "E22": [
+      "transaction_recovery"
+    ],
+    "E23": [
+      "portable",
+      "portable_precision"
+    ],
+    "E24": [
+      "portable",
+      "portable_units"
+    ],
+    "E25": [],
+    "E26": [
+      "positive_flat",
+      "positive_v",
+      "positive_bull",
+      "positive_flat_v",
+      "positive_multi_flat",
+      "edge_fit"
+    ],
+    "E27": [
+      "portable",
+      "portable_units",
+      "portable_precision",
+      "portable_mode",
+      "portable_inch"
+    ],
+    "E28": [
+      "review_failures",
+      "filesystem_recovery",
+      "resource_guard"
+    ],
+    "E29": [
+      "review_svg",
+      "filesystem_recovery",
+      "portable",
+      "review_failures"
+    ],
+    "E30": [
+      "resource_guard",
+      "positive_flat",
+      "review_svg"
+    ],
+    "E31": [
+      "smoke",
+      "portable",
+      "installed_smoke"
+    ],
+    "E32": [
+      "review_layout",
+      "document_lifetime",
+      "preview_pick"
+    ]
+  },
+  "scope_note": "Mapping is not a pass. Each required run and independent artifact audit must pass; native/oracle boundary evidence is linked separately."
+}

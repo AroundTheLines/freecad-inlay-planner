@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100mm" height="80mm" viewBox="0 0 100 80">
+  <rect id="rectangle" fill="#222222" x="8" y="8" width="12" height="10"/>
+  <circle id="circle" fill="#444444" cx="30" cy="45" r="6"/>
+  <polygon id="triangle" fill="#666666" points="55,10 75,10 65,28"/>
+  <polygon id="diamond" fill="#888888" points="60,55 70,47 80,55 70,63"/>
+</svg>

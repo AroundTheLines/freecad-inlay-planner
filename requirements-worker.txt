@@ -1,0 +1,5 @@
+numpy==2.2.6
+shapely==2.1.2
+svg.path==7.1
+defusedxml==0.7.1
+

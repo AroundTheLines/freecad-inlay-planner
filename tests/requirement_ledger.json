@@ -1,0 +1,1100 @@
+{
+  "schema_version": 1,
+  "scope": "macOS arm64 FreeCAD 1.1.3; finite tested configurations; constant-section stock; Windows, physical cuts and whole-machine 4 GB qualification deferred",
+  "status_policy": "Only final packaged real-GUI runs with independent output evidence can pass E00-E32. Unit/oracle tests are supporting evidence, not GUI passes. E18 explicitly uses native-boundary evidence for repeated-tool orders that the generator cannot emit; this does not replace its GUI cap-state journeys.",
+  "cases": [
+    {
+      "id": "E00",
+      "requirement": "\u00a7\u00a71, 12\u201314: installation and entry",
+      "journey": "Install the final archive in a clean profile, launch CAM, open Create Inlay from its native entry, cancel, reopen, and switch workbenches/documents.",
+      "independent_assertion": "One command/panel exists; viewport and selection remain usable; package imports come from the installed archive; no personal settings or unrelated document change.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/smoke/report.json",
+        "artifacts/final-mac-82c512f1/document_lifetime/report.json",
+        "artifacts/final-mac-82c512f1/review_layout/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E01",
+      "requirement": "\u00a7\u00a72, 7, 14: complete machining journey",
+      "journey": "Run the entire import-to-export sequence for each required tool-set family, including asymmetric artwork and native save/reopen.",
+      "independent_assertion": "Independent cutter/assembly oracles and parsed exported motions agree with the final accepted design and setup; both native jobs are retained as evidence.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/oracles/audit_solver.py",
+        "tests/oracles/audit_mutations.py",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg",
+        "examples/outlined_letterform.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_bull/report.json",
+        "artifacts/final-mac-82c512f1/positive_bull/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_flat/report.json",
+        "artifacts/final-mac-82c512f1/portable_flat/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_v/report.json",
+        "artifacts/final-mac-82c512f1/portable_v/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_bull/report.json",
+        "artifacts/final-mac-82c512f1/portable_bull/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_flat_v/report.json",
+        "artifacts/final-mac-82c512f1/portable_flat_v/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E02",
+      "requirement": "\u00a73: supported SVG",
+      "journey": "Import paths, primitives, nested transforms, filled compounds, holes/counters, outlined text, supported inherited fill properties, and mixed units through the file control.",
+      "independent_assertion": "Known analytic topology, physical extents, hole count, orientation, and retained source IDs match the visible imported result.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_production_svg_import_matches_independent_fixture_topology_and_area"
+      ],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg",
+        "examples/outlined_letterform.svg",
+        "examples/scattered_motif.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_svg/report.json",
+        "artifacts/final-mac-82c512f1/edge_inputs_depth/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E03",
+      "requirement": "\u00a73: rejected/mixed SVG",
+      "journey": "Import malformed, self-intersecting or ambiguous, stroke-only, raster, live-text, unsupported-effect, and mixed-content fixtures; attempt external references.",
+      "independent_assertion": "Exact affected regions/reasons are visible; supported content remains selectable; no silent tracing, stroke expansion, remote load, or application of unresolved input occurs.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_svg_group_compositing_cannot_be_undone_by_child",
+        "tests/test_independent_geometry.py::test_svg_invalid_transform_tokens_cannot_be_silently_removed"
+      ],
+      "fixtures": [
+        "examples/boundary_crossing_ornament.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_svg/report.json",
+        "artifacts/final-mac-82c512f1/edge_inputs_depth/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E04",
+      "requirement": "\u00a7\u00a74, 14: stock and existing faces",
+      "journey": "Create small and 24-inch slabs; edit dimensions; select valid existing planar faces and invalid/nonplanar or deleted references.",
+      "independent_assertion": "Native stock sizes and selected face transforms match inputs; invalid selection is recoverable; no arbitrary extra size limit or stale face is accepted.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_create.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/stock_faces/report.json",
+        "artifacts/final-mac-82c512f1/source_recovery/report.json",
+        "artifacts/final-mac-82c512f1/resource_guard/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/native-20260928-212241/report.json",
+        "tests/oracles/test-runs/export-native-20260928-212241.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "qualification": "Existing face capture is limited to constant-thickness prisms. Irregular outlines and through holes are tested; taper and hidden recess are rejected."
+    },
+    {
+      "id": "E05",
+      "requirement": "\u00a7\u00a74, 6: units",
+      "journey": "Switch displayed metric/imperial units and mix the representative imperial cutters with metric cutters and stock dimensions.",
+      "independent_assertion": "Independent quantity conversion preserves physical size, cutter identity, fit, feeds, depth, and resolution through save and native export.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_modal_gcode_units_speeds_tools_and_endpoints",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_tools/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/review_placement/report.json",
+        "artifacts/final-mac-82c512f1/portable_units/report.json",
+        "artifacts/final-mac-82c512f1/portable_units/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E06",
+      "requirement": "\u00a7\u00a74\u20135: placement and origins",
+      "journey": "Center on X, Y, and both; resize, rotate, drag, use numeric placement and bounds; change each setup origin independently.",
+      "independent_assertion": "Artwork scale/assembly registration stays paired; slab-axis centering matches expected coordinates; moving artwork does not silently move the work origin.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_create.py",
+        "tests/test_independent_geometry.py::test_asymmetric_registration_detects_wrong_mirror"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_placement/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E07",
+      "requirement": "\u00a7\u00a74, 14: paired setup isolation",
+      "journey": "Preview flipped asymmetric artwork and outlined letters; create another face-pair task; alternate documents and selections.",
+      "independent_assertion": "Explicit rigid transforms produce the correct assembled orientation; each task owns only its pair and operations; origins and other tasks remain unchanged.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/oracles/audit_mutations.py"
+      ],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg",
+        "examples/outlined_letterform.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_svg/report.json",
+        "artifacts/final-mac-82c512f1/review_placement/report.json",
+        "artifacts/final-mac-82c512f1/transaction_recovery/report.json",
+        "artifacts/final-mac-82c512f1/document_lifetime/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E08",
+      "requirement": "\u00a7\u00a75, 8: bounds and margins",
+      "journey": "Move details across each rectangular edge; vary margins; include a tool whose center fits but swept cutter/plug relief does not.",
+      "independent_assertion": "Cuttable/blocked overlays agree with independently intersected bounds and actual swept material; blocked included portions prevent Apply.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_cutter_sweeps_in_air_are_clipped_to_actual_stock_bounds",
+        "tests/oracles/audit_solver.py"
+      ],
+      "fixtures": [
+        "examples/boundary_crossing_ornament.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_bounds/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E09",
+      "requirement": "\u00a7\u00a75, 10: fine selection/exclusion",
+      "journey": "Zoom, select regions and portions near holes/thin features, exclude them, restore them, and reject an invalid retained topology.",
+      "independent_assertion": "Both halves change together, valid holes/components remain correct, source artwork survives, and visibility never substitutes for exclusion.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [
+        "examples/outlined_letterform.svg",
+        "examples/fine_detail_ladder.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_placement/report.json",
+        "artifacts/final-mac-82c512f1/edge_inputs_depth/report.json",
+        "artifacts/final-mac-82c512f1/edge_bounds/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E10",
+      "requirement": "\u00a76: tool library and identity",
+      "journey": "Browse/select/deselect native flat, V, and bull-nose tools; try an unsupported or incomplete definition; select two distinct physical tools of equal diameter.",
+      "independent_assertion": "Geometry and identities match snapshots; required missing data is diagnosed; source library hashes remain unchanged; equal diameter does not merge tool identities.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_create.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_tools/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_bull/report.json",
+        "artifacts/final-mac-82c512f1/positive_bull/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E11",
+      "requirement": "\u00a7\u00a76\u20137: actual cutter shapes",
+      "journey": "Calculate straight corners, finite-tip V details, bull floor/crown/root cases, overreach, and an intentionally incompatible root clearance.",
+      "independent_assertion": "Independent profiles/sweeps certify positive fixtures and identify precise blocked regions in negative fixtures; no V/bull result is silently treated as a flat end mill.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/oracles/run_occt.py",
+        "tests/oracles/audit_solver.py"
+      ],
+      "fixtures": [
+        "examples/fine_detail_ladder.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_bull/report.json",
+        "artifacts/final-mac-82c512f1/positive_bull/independent-audit.json",
+        "artifacts/final-mac-82c512f1/edge_tools/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E12",
+      "requirement": "\u00a76: per-tool/pass overrides",
+      "journey": "Edit a tool's maximum stepdown and pass spacing, override one operation, and compare other uses on both faces.",
+      "independent_assertion": "Emitted depth/pass intervals respect effective values; only the intended use changes; inherited versus overridden settings and the unchanged library are visible.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/review_lifecycle/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E13",
+      "requirement": "\u00a7\u00a76, 9: independent speeds",
+      "journey": "Set different cutting, plunge, feed-controlled travel, and spindle values for roughing/finishing and both faces; retain the same physical cutter.",
+      "independent_assertion": "Independently parsed native/exported F/S values and unit conversions match effective settings; overrides do not introduce a false physical tool change.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/oracles/audit_export.py",
+        "tests/oracles/audit_mutations.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/report.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E14",
+      "requirement": "\u00a77: depth/height and independent fit",
+      "journey": "Drive D, switch to H without changing geometry, then vary glue gap, per-side clearance, and backing clearance separately, including infeasible combinations.",
+      "independent_assertion": "Independent section/reference equations and local clearance intervals agree; inputs are not silently clamped or coupled; nominated pose and first contact remain distinct.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_assembled_bottom_gap_and_backing_clearance_from_actual_motion",
+        "tests/oracles/audit_solver.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_inputs_depth/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_bull/report.json",
+        "artifacts/final-mac-82c512f1/positive_bull/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E15",
+      "requirement": "\u00a78: machine resolution",
+      "journey": "Change shared XY and independent Z increments, shift artwork relative to the lattice, and exercise narrow features and near-zero clearances.",
+      "independent_assertion": "Final restored/exported motion respects the configured contract; numerical uncertainty is separate from commanded changes; unresolved residuals/fit violations prevent Apply.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_separate_xy_z_lattices_reject_one_axis_error",
+        "tests/test_independent_geometry.py::test_six_decimal_serialization_can_lose_a_finer_lattice"
+      ],
+      "fixtures": [
+        "examples/fine_detail_ladder.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/portable_units/report.json",
+        "artifacts/final-mac-82c512f1/portable_units/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E16",
+      "requirement": "\u00a7\u00a77, 10: modified artwork",
+      "journey": "Preview a rounded proposal, reject it, accept it for the pair, change a cutter, and inspect the newly proposed revision.",
+      "independent_assertion": "Source-versus-result differences are independently measurable; only explicit acceptance changes retained geometry; prior acceptance cannot authorize a new revision.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/oracles/audit_solver.py"
+      ],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_lifecycle/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E17",
+      "requirement": "\u00a7\u00a75, 12: preview and selection",
+      "journey": "Select paths in the list and viewport; isolate/hide/show; switch board, plug, assembled sections, and expected finished-board views.",
+      "independent_assertion": "Selected cutter/face/path agree; cutting/travel and inclusion/visibility states differ correctly; displayed material/depth samples agree with the verifier; no backing-removal path exists.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/preview_pick/report.json",
+        "artifacts/final-mac-82c512f1/review_lifecycle/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/edge_bounds/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E18",
+      "requirement": "\u00a78: per-face limits",
+      "journey": "Enable/disable each cap independently; test below/at/above limits, same-tool speed changes, and three operations per face with a cap of four. Challenge repeated A\u2192B\u2192A ordering at the native validation boundary: the current generator emits one operation per selected cutter, so that repeated order is not a reachable generation action.",
+      "independent_assertion": "Counts match independently read operation order; no initial-load or cross-face change is counted; no pooling, silent tool removal, or hidden work bypasses a conflict.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_per_face_counts_and_feed_changes_are_independent",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/count_boundaries/report.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/independent-audit.json",
+        "artifacts/final-mac-82c512f1/edge_tools/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/native-20260928-212241/report.json",
+        "tests/oracles/test-runs/export-native-20260928-212241.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "route_note": "Repeated A\u2192A\u2192B\u2192A order is an ordered native adapter fixture, not a generated GUI plan. The GUI exercises reachable tool order and cap states; independent native/export counters challenge repeated identities.",
+      "qualification": "Repeated A\u2192A\u2192B\u2192A order is covered by the native adapter fixture. The generator emits one operation per selected cutter per face; its reachable GUI cap states are independently tested."
+    },
+    {
+      "id": "E19",
+      "requirement": "\u00a79: independent optimization/time",
+      "journey": "Recalculate with changed speeds and a selected detail cutter; inspect each operation's baseline and chosen candidate.",
+      "independent_assertion": "Independent length/feed timing confirms the selected valid candidate is no slower than its baseline; no selected fidelity is discarded; manual changes and workshop tasks stay excluded.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_timing_uses_mm_per_minute_and_excludes_manual_changes",
+        "tests/oracles/audit_solver.py"
+      ],
+      "fixtures": [
+        "examples/scattered_motif.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/report.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E20",
+      "requirement": "\u00a7\u00a75, 10: recalculation lifecycle",
+      "journey": "Calculate, edit a machining input while reviewing, request another calculation, cancel a running calculation, and retry.",
+      "independent_assertion": "Input/result hashes and visible state transitions agree; stale results cannot Apply; prior accepted native work survives; repeated actions do not create duplicate workers or jobs.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_lifecycle/report.json",
+        "artifacts/final-mac-82c512f1/review_failures/report.json",
+        "artifacts/final-mac-82c512f1/document_lifetime/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E21",
+      "requirement": "\u00a7\u00a710\u201312: confirmation and transaction",
+      "journey": "Inspect the full final review, cancel it, confirm a valid pair, and attempt Apply with a stale/blocked revision or count conflict.",
+      "independent_assertion": "No jobs appear before confirmation; a valid Apply writes exactly the reviewed pair; invalid attempts make no document change; no export is triggered by Apply.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_create.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/report.json",
+        "artifacts/final-mac-82c512f1/count_boundaries/independent-audit.json",
+        "artifacts/final-mac-82c512f1/source_recovery/report.json",
+        "artifacts/final-mac-82c512f1/review_lifecycle/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E22",
+      "requirement": "\u00a7\u00a710\u201311: undo and rollback",
+      "journey": "Undo/redo a successful pair, then inject failure after creating the first job while an unrelated job already exists.",
+      "independent_assertion": "Native document snapshots show atomic pair creation/removal and complete rollback; unrelated geometry/jobs and earlier accepted paths remain intact.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_create.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/transaction_recovery/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E23",
+      "requirement": "\u00a711: durable native edits",
+      "journey": "Open built-in Custom editing, change a command/feed, reorder/manage operations, recompute, save, and reopen.",
+      "independent_assertion": "Independent native-command comparison shows durable intended edits; controller-feed changes do not falsely imply rewriting stored F words; the original certificate is not claimed for modified motion.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_reopen.py",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_precision/report.json",
+        "artifacts/final-mac-82c512f1/portable_precision/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/native-20260928-212241/report.json",
+        "tests/oracles/test-runs/export-native-20260928-212241.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "qualification": "Native commands remain editable without the extension. Six-decimal native feed rounding is reported independently; manual edits invalidate the prior geometry certificate. Unsuitable export options are detected by test oracles, not blocked by an extension exporter."
+    },
+    {
+      "id": "E24",
+      "requirement": "\u00a711: extension-free portability",
+      "journey": "Save, close, remove the add-on from the test profile, make the original SVG/tool library unavailable, and reopen in a fresh Mac process.",
+      "independent_assertion": "Actual native GUI inspection, durable editing, recompute, resave, and ordinary CAM export succeed without extension imports or external source dependencies.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_reopen.py",
+        "tests/native/portability_export.py",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_units/report.json",
+        "artifacts/final-mac-82c512f1/portable_units/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/native-20260928-212241/report.json",
+        "tests/oracles/test-runs/export-native-20260928-212241.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "qualification": "Native commands remain editable without the extension. Six-decimal native feed rounding is reported independently; manual edits invalidate the prior geometry certificate. Unsuitable export options are detected by test oracles, not blocked by an extension exporter."
+    },
+    {
+      "id": "E25",
+      "requirement": "\u00a711: optional regeneration",
+      "journey": "If shipped, restore saved planning state, change settings, detect prior manual CAM edits, cancel replacement, then explicitly replace.",
+      "independent_assertion": "Restored exclusions/modifications/limits match source records; no automatic mutation occurs on reopen; cancellation preserves manual edits and replacement remains atomic. If absent, mark optional/unimplemented explicitly.",
+      "required": false,
+      "status": "optional_unimplemented",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "Optional planning-task restoration is not shipped. Native CAM output is retained and editable without the add-on."
+    },
+    {
+      "id": "E26",
+      "requirement": "\u00a7\u00a711, 14: normal CAM export",
+      "journey": "Select each reviewed native Job and use the actual CAM postprocessing command/dialog with the qualified LinuxCNC settings.",
+      "independent_assertion": "A separate parser reconstructs modal units, origins, F/S, tool order, G61, and motion; independent sweep/assembly checks apply to the exported commands, not just planner memory.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_export.py",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_bull/report.json",
+        "artifacts/final-mac-82c512f1/positive_bull/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat_v/independent-audit.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_multi_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/edge_fit/report.json",
+        "artifacts/final-mac-82c512f1/edge_fit/independent-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E27",
+      "requirement": "\u00a7\u00a78, 11: serialization/export precision",
+      "journey": "Save/reload near-rounding-boundary coordinates; export fine metric/inch cases and deliberately unsuitable post precision or unrestricted G64.",
+      "independent_assertion": "The harness detects lost precision or uncertified motion mode and records its cause; a qualified native settings route succeeds without modifying the postprocessor or adding an exporter.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/test_independent_geometry.py::test_inch_precision_loss_is_detected_without_redefining_resolution",
+        "tests/test_independent_geometry.py::test_unrestricted_blending_is_not_certified_as_linear_motion",
+        "tests/oracles/audit_export.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_units/report.json",
+        "artifacts/final-mac-82c512f1/portable_units/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_precision/report.json",
+        "artifacts/final-mac-82c512f1/portable_precision/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_mode/report.json",
+        "artifacts/final-mac-82c512f1/portable_mode/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/portable_inch/report.json",
+        "artifacts/final-mac-82c512f1/portable_inch/independent-portable-audit.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/native-20260928-212241/report.json",
+        "tests/oracles/test-runs/export-native-20260928-212241.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "qualification": "Native commands remain editable without the extension. Six-decimal native feed rounding is reported independently; manual edits invalidate the prior geometry certificate. Unsuitable export options are detected by test oracles, not blocked by an extension exporter."
+    },
+    {
+      "id": "E28",
+      "requirement": "\u00a7\u00a710, 13: calculation failure",
+      "journey": "Inject worker startup failure, crash, unavailable private dependency, interrupted result writing, timeout, and memory pressure during actual GUI calculation.",
+      "independent_assertion": "A useful error/progress outcome appears; Cancel/retry remain usable; stale/partial results cannot Apply; previous accepted work and recoverable draft inputs remain intact.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_failures/report.json",
+        "artifacts/final-mac-82c512f1/filesystem_recovery/report.json",
+        "artifacts/final-mac-82c512f1/resource_guard/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E29",
+      "requirement": "\u00a7\u00a73, 10\u201311: file and state recovery",
+      "journey": "Cancel input/save dialogs; use paths with spaces/non-ASCII characters; simulate missing/read-only input/output/cache and mismatched result versions/hashes.",
+      "independent_assertion": "No shell interpretation or unrelated-file deletion occurs; errors identify the action; no partial result replaces accepted output; retry with a valid location succeeds.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_svg/report.json",
+        "artifacts/final-mac-82c512f1/filesystem_recovery/report.json",
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/review_failures/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E30",
+      "requirement": "\u00a713: offline and resource envelope",
+      "journey": "Run packaged journeys offline, then the six-family/large-stock/dense qualification corpus with external process-tree monitoring.",
+      "independent_assertion": "No runtime account/download is needed; memory/preview caches meet recorded budgets; responsive progress/cancellation and recoverable exhaustion are observed; no whole-machine 4 GiB claim is inferred.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [
+        "examples/asymmetric_leaf.svg",
+        "examples/outlined_letterform.svg",
+        "examples/scattered_motif.svg",
+        "examples/fine_detail_ladder.svg",
+        "examples/boundary_crossing_ornament.svg",
+        "examples/dense_decorative_field.svg"
+      ],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/resource_guard/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/report.json",
+        "artifacts/final-mac-82c512f1/positive_flat/independent-audit.json",
+        "artifacts/final-mac-82c512f1/review_svg/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json",
+        "artifacts/final-resource-package-82c512f1/qualification.json",
+        "artifacts/final-resource-package-82c512f1/computational-equivalence.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications.",
+      "qualification": "Offline execution, process budgets and recoverable dense-case rejection are tested. This is not qualification of a complete 4 GB computer."
+    },
+    {
+      "id": "E31",
+      "requirement": "\u00a7\u00a711\u201314: install/update/remove",
+      "journey": "Cold-install, replace with another verified package, roll back the test installation, uninstall, and reopen saved native output.",
+      "independent_assertion": "Installed manifest/import origins match the tested archive; no checkout dependency or unrelated preferences change; rollback restores the previous package and removal leaves native output usable.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [
+        "tests/native/portability_reopen.py"
+      ],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/smoke/report.json",
+        "artifacts/final-mac-82c512f1/portable/report.json",
+        "artifacts/final-mac-82c512f1/portable/independent-portable-audit.json",
+        "artifacts/final-mac-82c512f1/installed_smoke/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    },
+    {
+      "id": "E32",
+      "requirement": "\u00a7\u00a712\u201314: ordinary interaction",
+      "journey": "Use the panel at representative window sizes, operate keyboard/native selection controls, switch active documents during review, and repeat task entry.",
+      "independent_assertion": "Required labels/settings/actions remain reachable; zoom and selection work; document context is correct; repeated entry leaves no duplicate commands, leaked overlays, or stale references.",
+      "required": true,
+      "status": "passed",
+      "executable_tests": [],
+      "fixtures": [],
+      "evidence": [
+        "artifacts/final-mac-82c512f1/review_layout/report.json",
+        "artifacts/final-mac-82c512f1/document_lifetime/report.json",
+        "artifacts/final-mac-82c512f1/preview_pick/report.json"
+      ],
+      "supporting_evidence": [
+        "artifacts/final-mac-82c512f1/unit-receipt.json",
+        "tests/oracles/test-runs/checkpoint-82c512f1.json"
+      ],
+      "remaining": "No remaining Mac software gate within the recorded finite acceptance scope; see explicit qualifications."
+    }
+  ],
+  "execution_ownership": {
+    "gui_journeys": "Lead/UI agent: final packaged E00\u2013E32 controls and evidence",
+    "native_adaptation": "Integration agent: native transactions, editing, extension-free reopen, ordinary CAM export",
+    "independent_oracles": "Independent reviewer: analytic/native sweeps, actual-output mutations, modal replay; production helpers forbidden for expected answers"
+  },
+  "archive_sha256": "82c512f17558d7c9272736dae5d1d6788ae50eb7bb01d25fd1cf06680364702a",
+  "final_runs": {
+    "artifacts/final-mac-82c512f1/smoke/report.json": {
+      "run_id": "a250c03552e541a1b0ecd84d634db64a",
+      "artifact_sha256": "f9f2d009b30acde48768c7d21e16a6325a705edaa44969cae23fb023bf9b77bc",
+      "status": "passed",
+      "assertions": 22
+    },
+    "artifacts/final-mac-82c512f1/document_lifetime/report.json": {
+      "run_id": "64a0de95388e4a0b84020e1ecdafb267",
+      "artifact_sha256": "02575fa2eb2e58f27a3491ca5aa68549322eafb94d209fdfe7dcdd59ffd1c56f",
+      "status": "passed",
+      "assertions": 13
+    },
+    "artifacts/final-mac-82c512f1/review_layout/report.json": {
+      "run_id": "2f465f9f96ef4dc5b59870812d0df10c",
+      "artifact_sha256": "5214fb0c8df2beed1d3706833d33a8434fc6a4178655fcbb1f2f6ee107612d22",
+      "status": "passed",
+      "assertions": 54
+    },
+    "artifacts/final-mac-82c512f1/positive_flat/report.json": {
+      "run_id": "5ce28f94ceaa4e288ce7a1486abdab75",
+      "artifact_sha256": "511c5a2c951bac893d45bb5e7d753fc76b0e3d0b940829f2b1ce946e7ebc3333",
+      "status": "passed",
+      "assertions": 86
+    },
+    "artifacts/final-mac-82c512f1/positive_v/report.json": {
+      "run_id": "5557600c14674c59b0ca25817346088b",
+      "artifact_sha256": "83de070ee1d224269f0a7fd04193c0e106bbc6b0a4717896a96439e974279442",
+      "status": "passed",
+      "assertions": 92
+    },
+    "artifacts/final-mac-82c512f1/positive_bull/report.json": {
+      "run_id": "aa19d6010df746e5a32ec838bd1e6e49",
+      "artifact_sha256": "8271d2784e69a944beaa51515e6daa4ad968d48f4e8ebfdb232df894a33ef90c",
+      "status": "passed",
+      "assertions": 91
+    },
+    "artifacts/final-mac-82c512f1/positive_flat_v/report.json": {
+      "run_id": "cd49501bea1741598e649f4085034cbf",
+      "artifact_sha256": "fc7dd9fe8566f6979cfcb0fefc0b2f8b7de7861407e9c4cc7e9f19490eda0ab9",
+      "status": "passed",
+      "assertions": 109
+    },
+    "artifacts/final-mac-82c512f1/positive_multi_flat/report.json": {
+      "run_id": "48803a9949014c768e112920b979c739",
+      "artifact_sha256": "1fea29cda75635090bc57d921c52b073eba9f1c7cc5b792ec6046264d4b898a2",
+      "status": "passed",
+      "assertions": 107
+    },
+    "artifacts/final-mac-82c512f1/portable/report.json": {
+      "run_id": "a4ac78e912c94bccacfeefc7c979ae2f",
+      "artifact_sha256": "82bf0799f7b8b09ff94b313136e1db79fecabc677c99e2cf5f78d103a96eb9f6",
+      "status": "passed",
+      "assertions": 71
+    },
+    "artifacts/final-mac-82c512f1/portable_flat/report.json": {
+      "run_id": "d816c4cdd92f46da8cfd0cd4b9056c42",
+      "artifact_sha256": "bb300358ec0caacbe20c715819e14438d89fb858e4af140b34a87885d657e7bc",
+      "status": "passed",
+      "assertions": 71
+    },
+    "artifacts/final-mac-82c512f1/portable_v/report.json": {
+      "run_id": "8c0254969dee48c7a8ec0da3be7ef118",
+      "artifact_sha256": "7c85ab2afc48e6815382ae750b9d6720162607a3d213fdc6d6af059c50d1fa02",
+      "status": "passed",
+      "assertions": 69
+    },
+    "artifacts/final-mac-82c512f1/portable_bull/report.json": {
+      "run_id": "66548df0525541f4a76d4691de8aaaab",
+      "artifact_sha256": "a7c02b1bcb1a7e94b17a315710d20b3ffc749633d66ae8eb65f0255eb098c5f6",
+      "status": "passed",
+      "assertions": 69
+    },
+    "artifacts/final-mac-82c512f1/portable_flat_v/report.json": {
+      "run_id": "1976d5e45c484624983458a5d56fb5fa",
+      "artifact_sha256": "c4ab839f6636fdfa0be9df7f330a5a141152b276a85c661ce343835b68bb30b8",
+      "status": "passed",
+      "assertions": 71
+    },
+    "artifacts/final-mac-82c512f1/review_svg/report.json": {
+      "run_id": "7126173782ba4a089cd7d2d54aaf51ff",
+      "artifact_sha256": "9179549f1b766e9d6ed6c3f883c6ad34c74c82778674ee584bd812e47bf0ac05",
+      "status": "passed",
+      "assertions": 91
+    },
+    "artifacts/final-mac-82c512f1/edge_inputs_depth/report.json": {
+      "run_id": "e81ae78479e246218dfa4b1440169269",
+      "artifact_sha256": "7f347b9e427585c31a811eca43ec52881243cc95f3e6ba87ca02b468bf818886",
+      "status": "passed",
+      "assertions": 138
+    },
+    "artifacts/final-mac-82c512f1/stock_faces/report.json": {
+      "run_id": "be84cc2436cf4fcb92c2de8699b5fd78",
+      "artifact_sha256": "fc282d06f6dfb805b5594d787b1ca85b838f740353492e2bcc142de8735e3f14",
+      "status": "passed",
+      "assertions": 19
+    },
+    "artifacts/final-mac-82c512f1/source_recovery/report.json": {
+      "run_id": "332137e9b02e443299c5594cadfd5867",
+      "artifact_sha256": "996bd3c6a4c6c0bd0ff1fd69400450559cb1689f54a39b69d20f4c63db145ce9",
+      "status": "passed",
+      "assertions": 67
+    },
+    "artifacts/final-mac-82c512f1/resource_guard/report.json": {
+      "run_id": "1a1af99c8a144ec094db6ae677bfff71",
+      "artifact_sha256": "41f80771e9218109d4cb2966bc749b0cd88cb1f5509fc4c7498c1ca446346b18",
+      "status": "passed",
+      "assertions": 143
+    },
+    "artifacts/final-mac-82c512f1/edge_tools/report.json": {
+      "run_id": "5c849ef43d1f47f3b3dfc5c18084caea",
+      "artifact_sha256": "7f50f5378ffaa0b9886779cfb5dbafb63809d1a90e6e42171876a305f22caafd",
+      "status": "passed",
+      "assertions": 135
+    },
+    "artifacts/final-mac-82c512f1/edge_fit/report.json": {
+      "run_id": "b4a80b1ceef64c6882e3a1ac799d5c48",
+      "artifact_sha256": "2d153bc09bf1bfd0b1102220ab9b4c3d233c672c00ab3baaa07cee161aeb8785",
+      "status": "passed",
+      "assertions": 181
+    },
+    "artifacts/final-mac-82c512f1/review_placement/report.json": {
+      "run_id": "98640ba6183a4704bf4e6beedda2539d",
+      "artifact_sha256": "b05496ef6f0680046b89d6897fd19910205cae664adf1f1e8ebbfa58cf764d2b",
+      "status": "passed",
+      "assertions": 57
+    },
+    "artifacts/final-mac-82c512f1/portable_units/report.json": {
+      "run_id": "e3fe29ffb54440d99e31267ec3e4fc54",
+      "artifact_sha256": "66e3616bd0c03422792800be9685499fae95c65ae9c320a35049b66751b71fae",
+      "status": "passed",
+      "assertions": 70
+    },
+    "artifacts/final-mac-82c512f1/transaction_recovery/report.json": {
+      "run_id": "4909b820d56544bea12269ad3a437a1d",
+      "artifact_sha256": "6304a10996caf64f2eb86383d8521b34b424d040868127397eddbd54cb31b892",
+      "status": "passed",
+      "assertions": 129
+    },
+    "artifacts/final-mac-82c512f1/edge_bounds/report.json": {
+      "run_id": "47181e55c24f45d2a9504a2dbd34453a",
+      "artifact_sha256": "690f9230262975880d462d91c2cf1c8be8c4029afdb043dace1c2c73e23f1090",
+      "status": "passed",
+      "assertions": 177
+    },
+    "artifacts/final-mac-82c512f1/review_lifecycle/report.json": {
+      "run_id": "b10d62d249714ef98be496fde7395122",
+      "artifact_sha256": "1e7bfbfa9b83426e64348e0c2e9ea3b85372752bf730c68237e1f6e2e41015f7",
+      "status": "passed",
+      "assertions": 93
+    },
+    "artifacts/final-mac-82c512f1/count_boundaries/report.json": {
+      "run_id": "5fcfca1b47ec405796ba90bfdce7f3d8",
+      "artifact_sha256": "3640daf3dd79d64358bf57891289afc8b0d95f7c10397a08424461b17d3486e1",
+      "status": "passed",
+      "assertions": 192
+    },
+    "artifacts/final-mac-82c512f1/preview_pick/report.json": {
+      "run_id": "b3d25e6674c64b6884cde2da503416af",
+      "artifact_sha256": "ff1181ef04eeece591613affb7c2050b04cf979cd762bf6ac1ab7c0369fab61d",
+      "status": "passed",
+      "assertions": 53
+    },
+    "artifacts/final-mac-82c512f1/review_failures/report.json": {
+      "run_id": "ac91e0f1b5024da59daf858fbec67541",
+      "artifact_sha256": "65402dec14bef32a441e2dc2fba2f3e870b2344dd916c0bcc06fff5045c39425",
+      "status": "passed",
+      "assertions": 106
+    },
+    "artifacts/final-mac-82c512f1/portable_precision/report.json": {
+      "run_id": "24aaf226d8c642e8b22b02d82e614d89",
+      "artifact_sha256": "c26411079206e89033f317d61e3d43c9356ffdc947b59cde3d0001210da8fc36",
+      "status": "passed",
+      "assertions": 17
+    },
+    "artifacts/final-mac-82c512f1/portable_mode/report.json": {
+      "run_id": "3dac8920b139444b8cad7040e7d05f95",
+      "artifact_sha256": "b43d922413524c1421f77e34815350975f136a4022d646d1e74872c27e83c62c",
+      "status": "passed",
+      "assertions": 15
+    },
+    "artifacts/final-mac-82c512f1/portable_inch/report.json": {
+      "run_id": "9921bfe6fd794904bb9abc8c96f66f4f",
+      "artifact_sha256": "72d49f2a8ba80ce9cbb5a241b583e41f7672d96bca395eef4bd35d5c9f9b3837",
+      "status": "passed",
+      "assertions": 15
+    },
+    "artifacts/final-mac-82c512f1/filesystem_recovery/report.json": {
+      "run_id": "d5316cb781834faca74e1903ca079f9a",
+      "artifact_sha256": "f3fac1ee0638f8f447c6bccd35568d1268f203a54a9cdeff4bddd55c3943cd1e",
+      "status": "passed",
+      "assertions": 72
+    },
+    "artifacts/final-mac-82c512f1/installed_smoke/report.json": {
+      "run_id": "b9d6f5a006d24edcb842e51d19e38c1e",
+      "artifact_sha256": "c2f4df3e22e73aa2e83ffc887b57cc5a585cd6e82a30c12bd270abb740e4ab2b",
+      "status": "passed",
+      "assertions": 22
+    }
+  },
+  "historical_supporting_runs": {
+    "tests/oracles/test-runs/pure-20260928T033130.214615Z/receipt.json": {
+      "run_id": "pure-20260928T033130.214615Z",
+      "artifact_sha256": "022b82b11e6f4524e8a9f015902d261e465dbfd1592a9f9edc2a6c5b64197806",
+      "status": "failed",
+      "scope": "Independent pure tests and actual SVG importer; no GUI or release claim"
+    },
+    "tests/oracles/test-runs/20260928T031750.706297Z-flat/audit.json": {
+      "run_id": "20260928T031750.706297Z-flat",
+      "artifact_sha256": "b7a8bcd950852b9973c1b5184a5951bc8a166da1edffdefd4b938c47cf9a1006",
+      "status": "passed",
+      "scope": "Actual solver, command invariants, conservative rectangular stock bounds, 27 sampled assembly probes; not GUI or whole-surface independent proof"
+    },
+    "tests/oracles/test-runs/20260928T031750.706297Z-v/audit.json": {
+      "run_id": "20260928T031750.706297Z-v",
+      "artifact_sha256": "62ff3960e1b43880af18882464d286674954b0b6bba3a889dd310ce3e4f62101",
+      "status": "passed",
+      "scope": "Actual solver, command invariants, conservative rectangular stock bounds, 27 sampled assembly probes; not GUI or whole-surface independent proof"
+    },
+    "tests/oracles/test-runs/20260928T031750.706297Z-bull/audit.json": {
+      "run_id": "20260928T031750.706297Z-bull",
+      "artifact_sha256": "f65152df7edcfa1b83e1583f73afcfd24e5d3d6bef4553430e4ab395789f766f",
+      "status": "passed",
+      "scope": "Actual solver, command invariants, conservative rectangular stock bounds, 27 sampled assembly probes; not GUI or whole-surface independent proof"
+    },
+    "artifacts/native-20260927-232436/report.json": {
+      "run_id": "4d598380-55ab-41b4-aa9a-a539731dc812",
+      "artifact_sha256": "efb29ba9ae04412da853f0bb916bb112393549d6293fabd26e48e666a87245e8",
+      "status": "passed",
+      "scope": "Native adapter/portability subset; not final packaged GUI journeys"
+    },
+    "tests/oracles/test-runs/export-native-20260927-232436.json": {
+      "run_id": "export-replay-20260928T033354.264032Z",
+      "artifact_sha256": "033fecfa79d01f97a35fc579925bacbe459888c173875180699dfc0b3e0ea6e3",
+      "status": "passed",
+      "scope": "Native adapter/portability subset; not final packaged GUI journeys"
+    },
+    "tests/oracles/test-runs/native-occt-20260928T032356.427189Z/runner.json": {
+      "run_id": "00e0e1ef-446c-4811-b5c3-ec3814779986",
+      "artifact_sha256": "7f548918e5112a3065fbf840077557af366215a9ccce9ab946b3d9a9bd0ad014",
+      "status": "passed",
+      "scope": "native OCCT only"
+    },
+    "tests/oracles/test-runs/mutations-20260928T033301.459102Z/audit.json": {
+      "run_id": "mutations-20260928T033301.459102Z",
+      "artifact_sha256": "16696e5c7d9a4cc9397d2742cb8c052ca206c02dbaec87f11a4c58382763e170",
+      "status": "passed",
+      "scope": "Actual asymmetric flat solver output and deliberately mutated motions; finite probes, not GUI or whole-surface proof"
+    }
+  },
+  "supporting_evidence_policy": "Reused computational receipts are bound by exact source and dependency hashes; no rerun is implied. Historical failed receipts remain historical, never final passes."
+}
